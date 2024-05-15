@@ -15,7 +15,7 @@ call UltraViewer_setup_6.6_en.exe /VERYSILENT /NORESTART
 call echo Installing AnyDesk
 call AnyDesk.exe --install "C:\Program Files (x86)\AnyDesk" --create-shortcuts --create-desktop-icon --silent
 call echo Installing XPrinter
-call XPrinter.exe
+call XPrinter.exe /SILENT /TASKS="desktopicon"
 call cd ../
 call cd ops-installation
 call echo Installing OPS

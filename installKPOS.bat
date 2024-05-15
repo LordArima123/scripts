@@ -17,11 +17,11 @@ call echo Installing AnyDesk
 call AnyDesk.exe --install "C:\Program Files (x86)\AnyDesk" --create-shortcuts --create-desktop-icon --silent
 call AnyDesk.exe
 call echo Installing XPrinter
-call XPrinter.exe
+call XPrinter.exe /SILENT /TASKS="desktopicon"
 call cd ../
 call cd ops-installation
 call echo Installing OPS
-call install.bat
+call installSillent.bat
 call cd ../
 call cd %~dp0Activate-Windows10
 call echo Activating Windows
