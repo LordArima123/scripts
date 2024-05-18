@@ -13,7 +13,7 @@ def find_button_on_screen(button_image_path, screenshot_path):
     _, max_val, _, max_loc = cv2.minMaxLoc(result)
 
     # If match is found with high confidence
-    threshold = 0.8
+    threshold = 0.6
     if max_val >= threshold:
         button_height, button_width = button_image.shape
         button_center = (max_loc[0] + button_width // 2, max_loc[1] + button_height // 2)
@@ -31,7 +31,7 @@ def take_screenshot():
 time.sleep(5)
 
 # Path to the image of the button
-button_image_path = 'Xprinter/agree.png'
+button_image_path = 'Xprinter/test.png'
 
 # Take a screenshot of the current screen
 screenshot_path = take_screenshot()
