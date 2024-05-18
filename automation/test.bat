@@ -7,5 +7,5 @@ call start XPrinter.exe
 call cd ../
 call echo Waiting XPrinter to open
 timeout /t 5 /nobreak >nul
-call python testXPrinter.py
+call python test.py
  PAUSE
