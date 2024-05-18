@@ -13,6 +13,7 @@ if pid :
     main_window['USB'].click()
     main_window['XP80C'].click()
     main_window['Install Now'].click()
+    time.sleep(1)
     main_window["No"].click()
 else:
     print("Cant find the process")
