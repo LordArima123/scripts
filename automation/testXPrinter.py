@@ -1,48 +1,42 @@
 import cv2
-import numpy as np
+import pytesseract
 import pyautogui
 import time
+import numpy as np
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-def find_button_on_screen(button_image_path, screenshot_path):
-    # Load the images
-    button_image = cv2.imread(button_image_path, cv2.IMREAD_GRAYSCALE)
-    screenshot = cv2.imread(screenshot_path, cv2.IMREAD_GRAYSCALE)
-
-    # Use template matching to find the button on the screen
-    result = cv2.matchTemplate(screenshot, button_image, cv2.TM_CCOEFF_NORMED)
-    _, max_val, _, max_loc = cv2.minMaxLoc(result)
-
-    # If match is found with high confidence
-    threshold = 0.6
-    if max_val >= threshold:
-        button_height, button_width = button_image.shape
-        button_center = (max_loc[0] + button_width // 2, max_loc[1] + button_height // 2)
-        return button_center
-    else:
-        return None
-
-def take_screenshot():
+def find_text_on_screen(target_text):
+    # Take a screenshot of the current screen
     screenshot = pyautogui.screenshot()
-    screenshot_path = 'screenshot.png'
-    screenshot.save(screenshot_path)
-    return screenshot_path
+    
+    # Convert the screenshot to a format suitable for OpenCV
+    screenshot_cv = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
+    
+    # Use pytesseract to extract text and bounding boxes
+    data = pytesseract.image_to_data(screenshot_cv, output_type=pytesseract.Output.DICT)
+    
+    # Iterate through the detected text elements
+    for i in range(len(data['text'])):
+        if target_text.lower() in data['text'][i].lower():
+            # Extract the bounding box coordinates
+            x, y, w, h = data['left'][i], data['top'][i], data['width'][i], data['height'][i]
+            return x + w // 2, y + h // 2  # Return the center of the bounding box
+    
+    return None
 
 # Allow some time to switch to the GUI application
 time.sleep(5)
 
-# Path to the image of the button
-button_image_path = 'Xprinter/test.png'
+# Text to find on the screen
+target_text = "accept"
 
-# Take a screenshot of the current screen
-screenshot_path = take_screenshot()
+# Find the text on the screen
+text_center = find_text_on_screen(target_text)
 
-# Find the button on the screen
-button_center = find_button_on_screen(button_image_path, screenshot_path)
-
-if button_center:
-    # Move the mouse to the center of the button and click it
-    pyautogui.moveTo(button_center)
+if text_center:
+    # Move the mouse to the center of the text and click it
+    pyautogui.moveTo(text_center)
     pyautogui.click()
-    print(f"Clicked the button at {button_center}")
+    print(f"Clicked on the text '{target_text}' at {text_center}")
 else:
-    print("Button not found on the screen")
+    print(f"Text '{target_text}' not found on the screen")
