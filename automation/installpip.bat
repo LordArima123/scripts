@@ -1,6 +1,6 @@
 echo Try installing pip pakages
 
-call "C:\Program Files\Python312\Scripts\pip" install pyautogui pillow
+call "C:\Program Files\Python312\Scripts\pip" install pyautogui pillow pywinauto psutil
 
 IF %ERRORLEVEL% NEQ 0 (
     call echo loop
