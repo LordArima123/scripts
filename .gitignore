@@ -1,5 +1,7 @@
-/Activate-Windows10
-/Driver
-/ops-installation
-/uiautomation
-/automation/python
+Activate-Windows10
+Driver
+ops-installation
+uiautomation
+python
+Scale
+__pycache__
