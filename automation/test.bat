@@ -7,5 +7,5 @@ call start "" "XPrinter Driver V7.77.exe"
 call echo Waiting XPrinter to open
 cd %~dp0pywinauto
 timeout /t 5 /nobreak >nul
-call python InstallConfig.py
- PAUSE
+call "C:\Program Files\Python312\python" InstallConfig.py
+PAUSE
